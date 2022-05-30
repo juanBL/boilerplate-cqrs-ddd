@@ -82,3 +82,7 @@ ping-mysql:
 clean-cache:
 	@rm -rf apps/*/*/var
 	@docker exec boilerplate-php_ddd_skeleton-boilerplate_backend-php ./apps/boilerplate/backend/bin/console cache:warmup
+
+.PHONY: coverage-html
+coverage-html: composer-env-file
+	docker exec -e XDEBUG_MODE=coverage boilerplate-php_ddd_skeleton-boilerplate_backend-php ./vendor/bin/phpunit --exclude-group='disabled' --coverage-html="coverage-html"
