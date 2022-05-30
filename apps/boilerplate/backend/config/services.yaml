@@ -1,0 +1,60 @@
+imports:
+  - { resource: ../../../../src/BoilerPlateContext/Shared/Infrastructure/Symfony/DependencyInjection/boilerplate_context_services.yaml }
+
+services:
+  _defaults:
+    autoconfigure: true
+    autowire: true
+
+  # Configure
+  _instanceof:
+    BoilerPlate\Shared\Domain\Bus\Event\DomainEventSubscriber:
+      tags: ['boilerplate.domain_event_subscriber']
+
+    BoilerPlate\Shared\Domain\Bus\Command\CommandHandler:
+      tags: ['boilerplate.command_handler']
+
+    BoilerPlate\Shared\Domain\Bus\Query\QueryHandler:
+      tags: ['boilerplate.query_handler']
+
+  BoilerPlate\Apps\BoilerPlate\Backend\Controller\:
+    resource: '../src/Controller'
+    tags: ['controller.service_arguments']
+
+  # Wire
+  BoilerPlate\Shared\:
+    resource: '../../../../src/Shared'
+
+  BoilerPlate\BoilerPlateContext\:
+    resource: '../../../../src/BoilerPlateContext'
+
+  # -- TAGGING --
+  BoilerPlate\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus:
+    arguments: [!tagged boilerplate.domain_event_subscriber]
+    lazy: true
+
+  BoilerPlate\Shared\Infrastructure\Bus\Event\DomainEventMapping:
+    arguments: [!tagged boilerplate.domain_event_subscriber]
+
+  BoilerPlate\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator:
+    arguments: [!tagged boilerplate.domain_event_subscriber]
+
+  BoilerPlate\Shared\Infrastructure\Doctrine\DatabaseConnections:
+    arguments: [!tagged boilerplate.database_connection]
+
+  BoilerPlate\Shared\Infrastructure\Symfony\AddJsonBodyToRequestListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+  BoilerPlate\Shared\Infrastructure\Symfony\ApiExceptionListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception, method: onException }
+
+
+  # -- APP DEFINITIONS --
+  # Command/Query Handlers
+  BoilerPlate\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
+    arguments: [!tagged boilerplate.command_handler]
+
+  BoilerPlate\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
+    arguments: [!tagged boilerplate.query_handler]
