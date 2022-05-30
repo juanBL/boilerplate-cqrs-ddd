@@ -1,0 +1,4 @@
+boilerplate_post:
+  path: /boilerplate/{name}
+  controller: BoilerPlate\Apps\BoilerPlate\Backend\Controller\BoilerPlate\BoilerPlatePostController
+  methods:  [POST]
