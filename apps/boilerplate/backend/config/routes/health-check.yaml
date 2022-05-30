@@ -1,0 +1,4 @@
+health-check_get:
+  path: /health-check
+  controller: BoilerPlate\Apps\BoilerPlate\Backend\Controller\HealthCheck\HealthCheckGetController
+  methods:  [GET]

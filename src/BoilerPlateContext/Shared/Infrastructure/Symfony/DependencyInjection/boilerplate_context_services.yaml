@@ -1,0 +1,19 @@
+services:
+  # Databases
+  Doctrine\ORM\EntityManager:
+    factory: [ BoilerPlate\BoilerPlateContext\Shared\Infrastructure\Doctrine\BoilerPlateContextEntityManagerFactory, create ]
+    arguments:
+      - driver: '%env(BOILERPLATE_DATABASE_DRIVER)%'
+        host: '%env(BOILERPLATE_DATABASE_HOST)%'
+        port: '%env(BOILERPLATE_DATABASE_PORT)%'
+        dbname: '%env(BOILERPLATE_DATABASE_NAME)%'
+        user: '%env(BOILERPLATE_DATABASE_USER)%'
+        password: '%env(BOILERPLATE_DATABASE_PASSWORD)%'
+      - '%env(APP_ENV)%'
+    tags:
+      - { name: boilerplate.database_connection }
+    public: true
+
+
+  # BoilerPlate
+  BoilerPlate\BoilerPlateContext\BoilerPlateModule\Domain\BoilerPlateRepository: '@BoilerPlate\BoilerPlateContext\BoilerPlateModule\Infrastructure\Persistence\DoctrineBoilerPlateRepository'

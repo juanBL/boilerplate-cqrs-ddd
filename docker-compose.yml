@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  boilerplate_mysql:
+    container_name: boilerplate-php_ddd_skeleton-boilerplate-mysql
+    image: amd64/mysql:8.0.28
+    ports:
+      - 3378:3306
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "--user=root",
+          "--password=",
+          "--host=127.0.0.1",
+          "ping",
+          "--silent"
+        ]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+    command: [ "--default-authentication-plugin=mysql_native_password" ]
+
+  boilerplate_backend_php:
+    container_name: boilerplate-php_ddd_skeleton-boilerplate_backend-php
+    user: "${UID}:${GID}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8046:8030"
+      - "9045:9001"
+    volumes:
+      - .:/app:delegated
+    depends_on:
+      - boilerplate_mysql
+    command: symfony serve --dir=apps/boilerplate/backend/public --port=8030 --force-php-discovery

@@ -1,0 +1,17 @@
+boilerplate_backend:
+  extensions:
+    FriendsOfBehat\SymfonyExtension:
+      kernel:
+        class: BoilerPlate\Apps\BoilerPlate\Backend\BoilerPlateBackendKernel
+      bootstrap: apps/bootstrap.php
+    Behat\MinkExtension:
+      sessions:
+        symfony:
+          symfony: ~
+      base_url: ''
+
+  suites:
+    health_check:
+      paths: [ apps/boilerplate/backend/tests/features/health_check ]
+      contexts:
+        - BoilerPlate\Tests\Shared\Infrastructure\Behat\ApiContext
