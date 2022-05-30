@@ -36,4 +36,21 @@
             <directory>./tests/Shared</directory>
         </testsuite>
     </testsuites>
+    <coverage cacheDirectory=".phpunit.cache/code-coverage" processUncoveredFiles="true">
+        <report>
+            <text outputFile="php://stdout" showUncoveredFiles="false"  showOnlySummary="true"/>
+        </report>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <exclude>
+            <directory>src/Shared</directory>
+            <directory suffix="Query.php">src/*/*/Application</directory>
+            <directory suffix="Command.php">src/*/*/Application</directory>
+            <directory suffix="CommandHandler.php">src/*/*/Application</directory>
+            <directory suffix=".php">src/*/*/Infrastructure</directory>
+            <directory suffix=".php">src/*/*/Domain/*/Exception</directory>
+            <directory suffix=".php">src/*/*/Domain/*/*/Exception</directory>
+        </exclude>
+    </coverage>
 </phpunit>
