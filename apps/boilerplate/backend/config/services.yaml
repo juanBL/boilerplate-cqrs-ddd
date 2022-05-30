@@ -58,3 +58,5 @@ services:
 
   BoilerPlate\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
     arguments: [!tagged boilerplate.query_handler]
+
+  BoilerPlate\Shared\Domain\Bus\Event\EventBus: '@BoilerPlate\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus'
