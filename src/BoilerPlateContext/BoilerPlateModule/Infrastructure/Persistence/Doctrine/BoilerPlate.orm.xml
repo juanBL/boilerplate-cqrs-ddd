@@ -5,7 +5,7 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="BoilerPlate\BoilerPlateContext\BoilerPlateModule\Domain\BoilerPlate" table="boilerplate">
-        <id name="id" type="boilerplate_id" column="id" length="36" />
+        <id name="id" type="boiler_plate_id" column="id" length="36" />
 
         <embedded name="name" class="BoilerPlate\BoilerPlateContext\BoilerPlateModule\Domain\BoilerPlateName" use-column-prefix="false" />
     </entity>
